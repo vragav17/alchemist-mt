@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <title>Alchemist</title>
+    <link rel="icon" type="image/png" href="../static/logo.png" />
+  </head>
+  <body>
+    <!-- Opening Container -->
+    <div class="container">
+
+    <!-- Logo on Navbar -->
+    <nav class="navbar navbar-light bg-light  navbar-expand-lg  sticky-top  ">
+      <a class="navbar-brand" href="{{url_for("core.index")}}">
+        <img src="../static/logo.png" width="auto" height="30" class="d-inline-block align-top" alt="">
+      Alchemist
+      </a>
+
+      <!-- Navbar-items -->
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item">
+            <span class="align-middle">
+              <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </span>
+          </li>
+          {% if current_user.is_authenticated %}
+          <li class="nav-link"><a href="{{ url_for('blog_posts.create_post') }}">Create Post</a></li>
+          {% endif %}
+        </ul>
+
+        {% if current_user.is_authenticated %}
+        <div class="nav-text">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ url_for('static', filename='profile_pics/' + current_user.profile_image) }}" width="40" height="40" class="rounded-circle">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="{{ url_for('users.account') }}">Profile</a>
+                <a class="dropdown-item" href="{{ url_for('core.info') }}">About Us</a>
+                <a class="dropdown-item" href="{{ url_for('users.logout') }}">Log Out</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        {% else %}
+        <li class="nav-link"><a href="{{ url_for('users.login') }}">Log In</a></li>
+        <li class="nav-link"><a href="{{ url_for('users.register') }}">Register</a></li>
+        {% endif %}
+
+      </div>
+    </nav>
+
+
+  </div>
+  
+  {% block content %}
+
+  {% endblock %}
+
+
+  </body>
+</html>

@@ -9,7 +9,7 @@
   <h5>Written by: {{post.author.username}}</h5>
   <h6>Published: {{ post.date.strftime('%B %d, %Y') }}</h6>
   <p>{{post.text}}</p>
-   {% if post.author == current_user %}
+   {% if (post.author == current_user) or (post.author == 'Admin') %}
      <div>
        <a class="btn btn-secondary" href="{{ url_for('blog_posts.update', blog_post_id=post.id) }}">Update</a>
        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#del_modal">Delete</button>

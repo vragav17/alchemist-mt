@@ -2,13 +2,38 @@
 {% block content %}
 <span style="display:inline-block; width: 25px;"></span>
 <form method="POST">
+  <div class="container"
+    <div class="form-group form-row align-items-cente">
     {# This hidden_tag is a CSRF security feature. #}
     {{ form.hidden_tag() }}
-    {{ form.email.label }} {{ form.email() }}<br>
-    {{ form.username.label }} {{ form.username() }}<br>
-    {{ form.password.label }} {{ form.password() }}<br>
-    {{ form.pass_confirm.label }} {{ form.pass_confirm() }}<br>
-    {{ form.submit() }}
+    {{ form.email.label(class="form-control-label") }}<br>
+    {{ form.email(class="form-control" ) }}<br>
+    </div>
+  </div>
+    <div class="container"
+      <div class="form-group form-row align-items-cente">
+    {{ form.username.label(class="form-control-label") }} <br>
+    {{ form.username(class="form-control" ) }}<br>
+  </div>
+</div>
+  <div class="container "
+    <div class="form-group form-row align-items-cente">
+    {{ form.password.label(class="form-control-label") }} <br>
+    {{ form.password(class="form-control" ) }}<br>
+  </div>
+</div>
+  <div class="container"
+    <div class="form-group form-row align-items-cente">
+    {{ form.pass_confirm.label(class="form-control-label") }}<br>
+     {{ form.pass_confirm(class="form-control" ) }}<br>
+   </div>
+ </div>
+   <div class="container"
+     <div class="form-group form-row align-items-cente">
+    {{ form.submit(class="btn btn-primary mb-2") }}
+  </div>
+  </div>
+
 </form>
 
 

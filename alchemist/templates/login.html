@@ -1,11 +1,48 @@
+<script type="text/javascript">
+  @grey:#2a2a2a;
+  @blue:#1fb5bf;
+  .log-form {
+    width: 40%;
+    min-width: 320px;
+    max-width: 475px;
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+
+    box-shadow: 0px 2px 5px rgba(0,0,0,.25);
+</script>
+
 {% extends "base.html" %}
 {% block content %}
+
 <span style="display:inline-block; width: 25px;"></span>
+<div class="log-form">
 <form method="POST">
+  <div class="container"
+    <div class="form-group form-row align-items-cente">
     {# This hidden_tag is a CSRF security feature. #}
     {{ form.hidden_tag() }}
-    {{ form.email.label }} {{ form.email() }}
-    {{ form.password.label }} {{ form.password() }}
-    {{ form.submit() }}
+    {{ form.email.label(class="form-control-label") }} <br>
+    {{ form.email(class="form-control") }}<br>
+    </div>
+    </div>
+    <div class="container"
+      <div class="form-group form-row align-items-cente">
+    {{ form.password.label (class="form-control-label") }}<br>
+     {{ form.password(class="form-control") }}<br>
+    </div>
+    </div>
+    <div class="container"
+      <div class="form-group form-row align-items-cente">
+    {{ form.submit(class="btn btn-primary mb-2") }}<br>
+    </div>
+    </div>
+    </div>
 </form>
 {% endblock %}

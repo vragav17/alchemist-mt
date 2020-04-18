@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from alchemist import db
+from alchemist import db, github
 from werkzeug.security import generate_password_hash,check_password_hash
 from alchemist.models import User, BlogPost
 from alchemist.users.forms import RegistrationForm, LoginForm, UpdateUserForm
@@ -8,7 +8,7 @@ from alchemist.users.picture_handler import add_profile_pic
 
 
 users = Blueprint('users', __name__)
-
+'''
 @users.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -23,37 +23,10 @@ def register():
         flash('Thanks for registering! Now you can login!')
         return redirect(url_for('users.login'))
     return render_template('register.html', form=form)
-
-@users.route('/login', methods=['GET', 'POST'])
+'''
+@users.route('/login' )
 def login():
-
-    form = LoginForm()
-    if form.validate_on_submit():
-        # Grab the user from our User Models table
-        user = User.query.filter_by(email=form.email.data).first()
-
-        # Check that the user was supplied and the password is right
-        # The verify_password method comes from the User object
-        # https://stackoverflow.com/questions/2209755/python-operation-vs-is-not
-
-        if user.check_password(form.password.data) and user is not None:
-            #Log in the user
-
-            login_user(user)
-            flash('Logged in successfully.')
-
-            # If a user was trying to visit a page that requires a login
-            # flask saves that URL as 'next'.
-            next = request.args.get('next')
-
-            # So let's now check if that next exists, otherwise we'll go to
-            # the welcome page.
-            if next == None or not next[0]=='/':
-                next = url_for('core.index')
-
-            return redirect(next)
-    return render_template('login.html', form=form)
-
+    return redirect(url_for("github.login"))
 
 
 
@@ -77,14 +50,14 @@ def account():
             current_user.profile_image = pic
 
         current_user.username = form.username.data
-        current_user.email = form.email.data
+
         db.session.commit()
         flash('User Account Updated')
         return redirect(url_for('users.account'))
 
     elif request.method == 'GET':
         form.username.data = current_user.username
-        form.email.data = current_user.email
+        
 
     profile_image = url_for('static', filename='profile_pics/' + current_user.profile_image)
     return render_template('account.html', profile_image=profile_image, form=form)

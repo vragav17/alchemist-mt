@@ -4,9 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_dance.contrib.github import make_github_blueprint, github
-
-
-
+from flask_admin import Admin
 
 ##############
 ###GIT HUB####
@@ -40,7 +38,7 @@ app.config['SECRET_KEY'] = 'mysecret'
 ###############################
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://voxkbtyxcnulfa:699146d06807597f9f26ce0873b078e6ca29b0f5b9352023a8df8c9b6491d3a1@ec2-34-200-72-77.compute-1.amazonaws.com:5432/d4rvfi31ltnplm'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
@@ -67,6 +65,12 @@ git_blueprint = make_github_blueprint(
     client_id="b144573e0f78b157baf4",
     client_secret="91b1db4f6f1aebe6cf0837b7b0496bb6465c5e87",
 )
+##############################
+######### flask_admin#########
+##############################
+
+
+
 
 
 

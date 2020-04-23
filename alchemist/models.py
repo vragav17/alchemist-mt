@@ -1,4 +1,4 @@
-from alchemist import db,login_manager, git_blueprint, cps_oauth
+from alchemist import db,login_manager, git_blueprint
 from flask import flash
 from flask_dance.consumer import oauth_authorized
 from sqlalchemy.orm.exc import NoResultFound
@@ -8,6 +8,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin, SQLAlchemyStorage
 from flask_login import UserMixin, current_user, login_user
 from flask_dance.contrib.github import make_github_blueprint
+"""from flask_admin.contrib.sqla import ModelView
+from flask_admin import helpers, expose, Admin"""
+
 # By inheriting the UserMixin we get access to a lot of built-in attributes
 # which we will be able to call in our views!
 # is_authenticated()
@@ -32,11 +35,15 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     profile_image = db.Column(db.String(20), nullable=False, default='default_profile.png')
     username = db.Column(db.String(64), unique=True, index=True)
+    fullname = db.Column(db.String(64), nullable=False)
+    entry_token = db.Column(db.Text, unique=True, index=True)
     # This connects BlogPosts to a User Author.
     posts = db.relationship('BlogPost', backref='author', lazy=True)
 
-    def __init__(self,  username):
+    def __init__(self,  username, fullname, entry_token):
         self.username = username
+        self.fullname = fullname
+        self.entry_token = entry_token
     def __repr__(self):
         return f"UserName: {self.username}"
 
@@ -57,14 +64,17 @@ def git_logged_in(blueprint, token):
     if account_info.ok:
         account_info_json = account_info.json()
         username = account_info_json['login']
-
+        user_fullname = account_info_json['name']
+        entry_token= account_info_json['node_id']
+        avatar_url= account_info_json["avatar_url"]
 
         query = User.query.filter_by(username=username)
-
+        node_id_query  = User.query.filter_by(entry_token=entry_token)
+        print(entry_token)
         try:
-            user = query.one()
+            user = node_id_query.one()
         except NoResultFound:
-            user = User(username=username)
+            user = User(username=username, fullname=user_fullname, entry_token=entry_token)
             db.session.add(user)
             db.session.commit()
 
@@ -91,3 +101,11 @@ class BlogPost(db.Model):
     def __repr__(self):
         return f"Post Id: {self.id} --- Date: {self.date} --- Title: {self.title}"
 db.create_all()
+
+"""
+# admin views
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(OAuth, db.session))
+admin.add_view(ModelView(BlogPost, db.session))
+
+"""

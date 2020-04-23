@@ -1,8 +1,11 @@
 from flask import render_template,url_for,flash, redirect,request,Blueprint
 from flask_login import current_user,login_required
-from alchemist import db
+from alchemist import db, basedir
 from alchemist.models import BlogPost
+from github import Github, InputGitTreeElement
 from alchemist.blog_posts.forms import BlogPostForm
+import datetime
+import os, base64
 
 blog_posts = Blueprint('blog_posts',__name__)
 
@@ -10,9 +13,26 @@ blog_posts = Blueprint('blog_posts',__name__)
 @login_required
 def create_post():
     form = BlogPostForm()
-
+    user_name_f = current_user.username
+    now = datetime.datetime.now()
+    now = str(now.strftime("%Y-%m-%d %H_%M_%S"))
+    title = form.title.data
+    text = form.text.data
+    filename = user_name_f+"_"+now+".txt"
     if form.validate_on_submit():
 
+        f = open("data.txt", "w")
+        f.write("Now the file has more content! Title = " + title+ "   text =" + text)
+
+        f.close()
+        os.rename("data.txt", filename)
+
+        filepath = os.path.join(basedir, filename)
+        g = Github("b0b6bb98f92588b738095fd0317ef26f0495bcdf")
+        repo = g.get_repo("vragav17/Onto_Test")
+        repo.create_file(filename, title, text,  branch="master")
+
+        os.remove(filename)
         blog_post = BlogPost(title=form.title.data,
                              text=form.text.data,
                              user_id=current_user.id

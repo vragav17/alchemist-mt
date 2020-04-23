@@ -7,9 +7,11 @@ certifi==2019.11.28
 chardet==3.0.4
 Click==7.0
 colorama==0.4.1
+Deprecated==1.2.9
 Django==3.0.3
 dominate==2.4.0
 Flask==1.1.1
+Flask-Admin==1.5.6
 Flask-BabelEx==0.9.4
 Flask-Bootstrap==3.3.7.1
 Flask-Dance==3.0.0
@@ -20,6 +22,8 @@ Flask-Principal==0.4.0
 Flask-Security==3.0.0
 Flask-SQLAlchemy==2.4.1
 Flask-WTF==0.14.2
+gitdb==4.0.4
+GitPython==3.1.1
 gunicorn==20.0.4
 idna==2.8
 image==1.5.28
@@ -33,6 +37,9 @@ mccabe==0.6.1
 oauthlib==3.1.0
 passlib==1.7.2
 Pillow==7.0.0
+psycopg2==2.8.5
+PyGithub==1.47
+PyJWT==1.7.1
 pylint==2.3.1
 python-dateutil==2.8.1
 python-editor==1.0.4
@@ -40,6 +47,7 @@ pytz==2019.3
 requests==2.22.0
 requests-oauthlib==1.3.0
 six==1.12.0
+smmap==3.0.2
 speaklater==1.3
 SQLAlchemy==1.3.13
 SQLAlchemy-Utils==0.36.1

@@ -38,7 +38,7 @@ app.config['SECRET_KEY'] = 'mysecret'
 ###############################
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://vprduixzljeqwx:c1f9fa6cb11261818a2b0db8465f6d3e64e7a6573691d5911465b587deec0d8f@ec2-52-6-143-153.compute-1.amazonaws.com:5432/ddaf86bk4q3bdj'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pnpuococwwaqmz:7b0019bfa3c7616f65df4c98f8e024c4a063e903fb83a6fe2ce475a001d26548@ec2-52-6-143-153.compute-1.amazonaws.com:5432/d3eb9oib0po11d'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 

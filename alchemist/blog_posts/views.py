@@ -28,8 +28,8 @@ def create_post():
         os.rename("data.txt", filename)
 
         filepath = os.path.join(basedir, filename)
-        g = Github("vragav17","Zkp3ejh01")
-        repo = g.get_repo("vragav17/Onto_Test")
+        g = Github("Onto-trail","Zkp3ejh01")
+        repo = g.get_repo("Onto-trail/Onto-trail-upload")
         repo.create_file(filename, title, text,  branch="master")
 
         os.remove(filename)
